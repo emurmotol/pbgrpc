@@ -6,14 +6,14 @@ import "context"
 type BugsService interface {
 	// Add your methods here
 	// e.x: Foo(ctx context.Context,s string)(rs string, err error)
-	Create(ctx context.Context, bug string) error
+	Create(ctx context.Context, bug string) (err error)
 }
 
 type basicBugsService struct{}
 
-func (b *basicBugsService) Create(ctx context.Context, bug string) (e0 error) {
+func (b *basicBugsService) Create(ctx context.Context, bug string) (err error) {
 	// TODO implement the business logic of Create
-	return e0
+	return err
 }
 
 // NewBasicBugsService returns a naive, stateless implementation of BugsService.

@@ -6,14 +6,14 @@ import "context"
 type UsersService interface {
 	// Add your methods here
 	// e.x: Foo(ctx context.Context,s string)(rs string, err error)
-	Create(ctx context.Context, email string) error
+	Create(ctx context.Context, email string) (err error)
 }
 
 type basicUsersService struct{}
 
-func (b *basicUsersService) Create(ctx context.Context, email string) (e0 error) {
+func (b *basicUsersService) Create(ctx context.Context, email string) (err error) {
 	// TODO implement the business logic of Create
-	return e0
+	return err
 }
 
 // NewBasicUsersService returns a naive, stateless implementation of UsersService.

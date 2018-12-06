@@ -22,9 +22,9 @@ func LoggingMiddleware(logger log.Logger) Middleware {
 
 }
 
-func (l loggingMiddleware) Create(ctx context.Context, email string) (e0 error) {
+func (l loggingMiddleware) Create(ctx context.Context, email string) (err error) {
 	defer func() {
-		l.logger.Log("method", "Create", "email", email, "e0", e0)
+		l.logger.Log("method", "Create", "email", email, "err", err)
 	}()
 	return l.next.Create(ctx, email)
 }

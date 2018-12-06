@@ -6,14 +6,14 @@ import "context"
 type NotificatorService interface {
 	// Add your methods here
 	// e.x: Foo(ctx context.Context,s string)(rs string, err error)
-	SendEmail(ctx context.Context, email string, content string) error
+	SendEmail(ctx context.Context, email string, content string) (err error)
 }
 
 type basicNotificatorService struct{}
 
-func (b *basicNotificatorService) SendEmail(ctx context.Context, email string, content string) (e0 error) {
+func (b *basicNotificatorService) SendEmail(ctx context.Context, email string, content string) (err error) {
 	// TODO implement the business logic of SendEmail
-	return e0
+	return err
 }
 
 // NewBasicNotificatorService returns a naive, stateless implementation of NotificatorService.
