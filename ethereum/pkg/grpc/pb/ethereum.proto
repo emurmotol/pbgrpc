@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package pb;
+
+
+//The Ethereum service definition.
+service Ethereum {
+ rpc CreateAccount (CreateAccountRequest) returns (CreateAccountReply);
+}
+
+message CreateAccountRequest {
+    string passphrase = 1;
+}
+
+message CreateAccountReply {
+    string address = 1;
+}
+
