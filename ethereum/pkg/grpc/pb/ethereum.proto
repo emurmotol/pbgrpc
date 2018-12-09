@@ -14,5 +14,6 @@ message CreateAccountRequest {
 
 message CreateAccountReply {
     string address = 1;
+    string err = 2;
 }
 

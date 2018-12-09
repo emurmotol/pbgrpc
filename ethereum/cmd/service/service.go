@@ -3,6 +3,12 @@ package service
 import (
 	"flag"
 	"fmt"
+	"net"
+	"net/http"
+	"os"
+	"os/signal"
+	"syscall"
+
 	endpoint "github.com/emurmotol/pbgrpc/ethereum/pkg/endpoint"
 	grpc "github.com/emurmotol/pbgrpc/ethereum/pkg/grpc"
 	pb "github.com/emurmotol/pbgrpc/ethereum/pkg/grpc/pb"
@@ -17,13 +23,8 @@ import (
 	prometheus1 "github.com/prometheus/client_golang/prometheus"
 	promhttp "github.com/prometheus/client_golang/prometheus/promhttp"
 	grpc1 "google.golang.org/grpc"
-	"net"
-	"net/http"
-	"os"
-	"os/signal"
 	appdash "sourcegraph.com/sourcegraph/appdash"
 	opentracing "sourcegraph.com/sourcegraph/appdash/opentracing"
-	"syscall"
 )
 
 var tracer opentracinggo.Tracer
@@ -89,6 +90,7 @@ func Run() {
 	logger.Log("exit", g.Run())
 
 }
+
 func initGRPCHandler(endpoints endpoint.Endpoints, g *group.Group) {
 	options := defaultGRPCOptions(logger, tracer)
 	// Add your GRPC options here
@@ -108,6 +110,7 @@ func initGRPCHandler(endpoints endpoint.Endpoints, g *group.Group) {
 	})
 
 }
+
 func getServiceMiddleware(logger log.Logger) (mw []service.Middleware) {
 	mw = []service.Middleware{}
 	mw = addDefaultServiceMiddleware(logger, mw)
@@ -115,6 +118,7 @@ func getServiceMiddleware(logger log.Logger) (mw []service.Middleware) {
 
 	return
 }
+
 func getEndpointMiddleware(logger log.Logger) (mw map[string][]endpoint1.Middleware) {
 	mw = map[string][]endpoint1.Middleware{}
 	duration := prometheus.NewSummaryFrom(prometheus1.SummaryOpts{
@@ -128,6 +132,7 @@ func getEndpointMiddleware(logger log.Logger) (mw map[string][]endpoint1.Middlew
 
 	return
 }
+
 func initMetricsEndpoint(g *group.Group) {
 	http.DefaultServeMux.Handle("/metrics", promhttp.Handler())
 	debugListener, err := net.Listen("tcp", *debugAddr)
@@ -141,6 +146,7 @@ func initMetricsEndpoint(g *group.Group) {
 		debugListener.Close()
 	})
 }
+
 func initCancelInterrupt(g *group.Group) {
 	cancelInterrupt := make(chan struct{})
 	g.Add(func() error {

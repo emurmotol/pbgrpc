@@ -25,7 +25,11 @@ func decodeCreateAccountRequest(_ context.Context, r interface{}) (interface{}, 
 // a user-domain response to a gRPC reply.
 func encodeCreateAccountResponse(_ context.Context, r interface{}) (interface{}, error) {
 	res := r.(endpoint.CreateAccountResponse)
-	return &pb.CreateAccountReply{AccountNumber: res.Address, Err: res.Err.Error()}, nil
+	var err string
+	if res.Err != nil {
+		err = res.Err.Error()
+	}
+	return &pb.CreateAccountReply{Address: res.Address, Err: err}, nil
 }
 
 func (g *grpcServer) CreateAccount(ctx context1.Context, req *pb.CreateAccountRequest) (*pb.CreateAccountReply, error) {

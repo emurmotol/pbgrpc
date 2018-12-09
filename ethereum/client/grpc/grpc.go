@@ -2,6 +2,7 @@ package grpc
 
 import (
 	"context"
+	"errors"
 
 	endpoint1 "github.com/emurmotol/pbgrpc/ethereum/pkg/endpoint"
 	pb "github.com/emurmotol/pbgrpc/ethereum/pkg/grpc/pb"
@@ -27,13 +28,13 @@ func New(conn *grpc.ClientConn, options map[string][]grpc1.ClientOption) (servic
 // encodeCreateAccountRequest is a transport/grpc.EncodeRequestFunc that converts a
 //  user-domain sum request to a gRPC request.
 func encodeCreateAccountRequest(_ context.Context, request interface{}) (interface{}, error) {
-	res := request.(endpoint1.CreateAccountResponse)
-	return &pb.CreateAccountReply{AccountNumber: res.Address, Err: res.Err.Error()}, nil
+	req := request.(endpoint1.CreateAccountRequest)
+	return &pb.CreateAccountRequest{Passphrase: req.Passphrase}, nil
 }
 
 // decodeCreateAccountResponse is a transport/grpc.DecodeResponseFunc that converts
 // a gRPC concat reply to a user-domain concat response.
 func decodeCreateAccountResponse(_ context.Context, reply interface{}) (interface{}, error) {
-	req := reply.(*pb.CreateAccountRequest)
-	return endpoint1.CreateAccountRequest{Passphrase: req.Passphrase}, nil
+	res := reply.(*pb.CreateAccountReply)
+	return endpoint1.CreateAccountResponse{Address: res.Address, Err: errors.New(res.Err)}, nil
 }

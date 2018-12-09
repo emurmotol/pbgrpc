@@ -2,8 +2,8 @@ package service
 
 import (
 	"context"
+	"log"
 
-	"github.com/Sirupsen/logrus"
 	"github.com/ethereum/go-ethereum/accounts/keystore"
 	"github.com/ethereum/go-ethereum/ethclient"
 )
@@ -27,10 +27,10 @@ func (b *basicEthereumService) CreateAccount(ctx context.Context, passphrase str
 func NewBasicEthereumService() EthereumService {
 	c, err := ethclient.Dial("https://ropsten.infura.io/v3/cb0f868c966e4cf8ae1da8d3a7e92af9")
 	if err != nil {
-		logrus.Fatal(err)
+		log.Fatalln("ethclient.Dial", err)
 	}
-	ks := keystore.NewKeyStore("/c/Users/emur/Appdata/Roaming/Ethereum/keystore", keystore.StandardScryptN, keystore.StandardScryptP)
-	return &basicEthereumService{c: c, ks, ks}
+	ks := keystore.NewKeyStore("C:\\Users\\emur\\Appdata\\Roaming\\Ethereum\\keystore", keystore.StandardScryptN, keystore.StandardScryptP)
+	return &basicEthereumService{c: c, ks: ks}
 }
 
 // New returns a EthereumService with all of the expected middleware wired in.
