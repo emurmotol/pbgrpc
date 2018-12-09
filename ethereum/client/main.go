@@ -20,14 +20,10 @@ func main() {
 	defer conn.Close()
 
 	var options map[string][]grpc1.ClientOption
-	ethService, err := grpc2.New(conn, options)
+	ethereumService, err := grpc2.New(conn, options)
 	if err != nil {
 		log.Fatalln("grpc2.New", err)
 	}
 
-	address, err := ethService.CreateAccount(context.Background(), "123123123")
-	if err != nil {
-		log.Fatalln("ethService.CreateAccount", err)
-	}
-	log.Println(address)
+	ethereumService.CreateAccount(context.Background(), "123123123")
 }
