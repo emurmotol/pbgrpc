@@ -2,6 +2,7 @@ package endpoint
 
 import (
 	"context"
+
 	service "github.com/emurmotol/pbgrpc/ethereum/pkg/service"
 	endpoint "github.com/go-kit/kit/endpoint"
 )
